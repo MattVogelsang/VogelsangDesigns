@@ -1,0 +1,32 @@
+{
+  "name": "vogelsangdesigns",
+  "version": "1.0.0",
+  "description": "Matthew Vogelsang's Creative Portfolio - Vogelsangdesigns",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "keywords": ["portfolio", "web-design", "creative", "developer"],
+  "author": "Matthew Vogelsang",
+  "license": "ISC",
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "next": "^14.0.0",
+    "framer-motion": "^10.16.0",
+    "lucide-react": "^0.292.0",
+    "@types/node": "^20.8.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "typescript": "^5.2.0"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.3.0",
+    "postcss": "^8.4.0",
+    "autoprefixer": "^10.4.0",
+    "@tailwindcss/typography": "^0.5.0"
+  }
+}
