@@ -1,148 +1,125 @@
-import { motion } from 'framer-motion'
 import Head from 'next/head'
-import ProjectCard from '../components/ProjectCard'
-import { useState } from 'react'
+import Image from 'next/image'
+import Link from 'next/link'
 
 export default function Projects() {
-  const [filter, setFilter] = useState('all')
-
   const projects = [
     {
       id: 1,
-      title: "E-Commerce Platform",
-      description: "A modern e-commerce solution with React and Node.js, featuring real-time inventory management and secure payment processing.",
-      image: "/project1.jpg",
-      tech: ["React", "Node.js", "MongoDB", "Stripe"],
-      link: "#",
+      title: "Trinity Insurance",
+      description: "Modern insurance platform with advanced user management, policy tracking, and automated claims processing. Features a comprehensive dashboard for agents and customers.",
+      image: "/images/trinity-insurance.jpg",
+      tech: ["React", "Node.js", "MongoDB", "Stripe", "AWS"],
+      link: "https://www.trinityinv.net/",
       category: "fullstack"
     },
     {
       id: 2,
-      title: "AI Chat Application",
-      description: "Real-time chat application with AI integration using OpenAI's GPT model for intelligent conversations.",
-      image: "/project2.jpg",
-      tech: ["Next.js", "OpenAI", "Socket.io", "Tailwind"],
-      link: "#",
-      category: "fullstack"
+      title: "Project Atlas",
+      description: "Interactive project management tool with 3D visualization, team collaboration features, and real-time updates. Designed for complex project planning and execution.",
+      image: "/images/project-atlas.jpg",
+      tech: ["React", "Three.js", "WebGL", "Node.js", "Socket.io"],
+      link: "https://project-atlas-weld.vercel.app",
+      category: "frontend"
     },
+
     {
       id: 3,
-      title: "Portfolio Website",
-      description: "Creative portfolio with smooth animations, 3D effects, and modern design principles.",
-      image: "/project3.jpg",
-      tech: ["React", "Framer Motion", "Three.js", "GSAP"],
-      link: "#",
-      category: "frontend"
+      title: "Swim with Sara",
+      description: "Swimming lesson booking platform with instructor profiles, real-time scheduling, and payment processing. Includes a mobile-responsive design for on-the-go bookings.",
+      image: "/images/swim-with-sara.jpg",
+      tech: ["Next.js", "PostgreSQL", "Stripe", "Tailwind", "TypeScript"],
+      link: "https://swimwithsara.vercel.app/",
+      category: "fullstack"
     },
     {
       id: 4,
-      title: "Weather Dashboard",
-      description: "Interactive weather dashboard with real-time data visualization and location-based forecasts.",
-      image: "/project4.jpg",
-      tech: ["Vue.js", "Chart.js", "Weather API", "PWA"],
-      link: "#",
+      title: "Classico",
+      description: "Elegant e-commerce platform for classic and vintage products. Features advanced filtering, wishlist functionality, and secure checkout with multiple payment options.",
+      image: "/images/classico.jpg",
+      tech: ["Next.js", "Stripe", "PostgreSQL", "Tailwind", "Framer Motion"],
+      link: "https://www.ridewithclassico.com/",
       category: "frontend"
     },
-    {
+        {
       id: 5,
-      title: "Task Management API",
-      description: "RESTful API for task management with authentication, real-time updates, and comprehensive documentation.",
-      image: "/project5.jpg",
-      tech: ["Node.js", "Express", "PostgreSQL", "JWT"],
-      link: "#",
-      category: "backend"
+      title: "Shop23",
+      description: "Modern retail platform with advanced inventory management, real-time analytics, and multi-vendor support. Includes a robust admin dashboard and mobile app.",
+      image: "/images/Shop23.jpg",
+      tech: ["Next.js", "PostgreSQL", "Stripe", "TypeScript", "Redis"],
+      link: "https://project3-shop23.onrender.com/",
+      category: "fullstack"
     },
     {
       id: 6,
-      title: "Social Media Analytics",
-      description: "Analytics platform for social media metrics with data visualization and reporting features.",
-      image: "/project6.jpg",
-      tech: ["Python", "Django", "React", "D3.js"],
-      link: "#",
-      category: "fullstack"
+      title: "Launching Soon",
+      description: "Coming soon page with countdown timer, email collection, and social media integration. Features modern animations and responsive design.",
+      image: "/images/launching-soon.jpg",
+      tech: ["Next.js", "Tailwind", "Framer Motion", "EmailJS"],
+      link: "https://launching-soon.com",
+      category: "frontend"
+    },
+    {
+      id: 7,
+      title: "Richy Landscaping",
+      description: "Professional portfolio and business website for Richy Landscaping. Features modern design, contact forms, and showcase of work and services.",
+      image: "/images/Landscape.jpg",
+      tech: ["Next.js", "Tailwind CSS", "TypeScript", "Framer Motion"],
+      link: "https://richys-landscaping.webflow.io/",
+      category: "frontend"
     }
   ]
-
-  const categories = [
-    { id: 'all', name: 'All Projects' },
-    { id: 'frontend', name: 'Frontend' },
-    { id: 'backend', name: 'Backend' },
-    { id: 'fullstack', name: 'Full Stack' }
-  ]
-
-  const filteredProjects = filter === 'all' 
-    ? projects 
-    : projects.filter(project => project.category === filter)
 
   return (
     <>
       <Head>
-        <title>Projects - Vogelsangdesigns</title>
-        <meta name="description" content="Explore Matthew Vogelsang's portfolio of web development projects." />
+        <title>Work - Vogelsang Designs</title>
+        <meta name="description" content="Explore Vogelsang Designs' portfolio of web development projects." />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
 
-      <div className="min-h-screen pt-20">
-        <section className="py-20 px-4">
-          <div className="max-w-7xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="text-center mb-16"
-            >
-              <h1 className="text-5xl md:text-7xl font-bold gradient-text mb-6">
-                My Projects
-              </h1>
-              <p className="text-xl text-white/80 max-w-2xl mx-auto">
-                A collection of my latest work showcasing innovation, creativity, and technical expertise
-              </p>
-            </motion.div>
+      <div className="min-h-screen pt-16">
+        <section className="py-12 sm:py-16 md:py-20">
+          <div className="container-custom">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-8 sm:mb-12 text-center sm:text-left">WORK</h1>
 
-            {/* Filter Buttons */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="flex flex-wrap justify-center gap-4 mb-12"
-            >
-              {categories.map((category) => (
-                <button
-                  key={category.id}
-                  onClick={() => setFilter(category.id)}
-                  className={`px-6 py-3 rounded-full transition-all duration-300 ${
-                    filter === category.id
-                      ? 'bg-purple-600 text-white'
-                      : 'glass-effect text-white/70 hover:text-white hover:bg-white/10'
-                  }`}
-                >
-                  {category.name}
-                </button>
-              ))}
-            </motion.div>
-
-            {/* Projects Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {filteredProjects.map((project, index) => (
-                <motion.div
-                  key={project.id}
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: index * 0.1 }}
-                >
-                  <ProjectCard project={project} />
-                </motion.div>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
+              {projects.map((project, index) => (
+                <div key={project.id} className="project-card card-hover fade-in-up" style={{ animationDelay: `${index * 0.1}s` }}>
+                  <div className="relative h-48 sm:h-56 md:h-64 cursor-pointer group">
+                    <a href={project.link} target="_blank" rel="noopener noreferrer">
+                      <Image
+                        src={project.image}
+                        alt={project.title}
+                        fill
+                        className="object-cover transition-transform duration-300 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
+                        <span className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 font-medium text-sm sm:text-base">
+                          View Website
+                        </span>
+                      </div>
+                    </a>
+                  </div>
+                  <div className="p-4 sm:p-6">
+                    <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3">{project.title}</h3>
+                    <p className="text-sm sm:text-base text-gray-600 mb-3 sm:mb-4 leading-relaxed">{project.description}</p>
+                    <div className="flex flex-wrap mb-3 sm:mb-4">
+                      {project.tech.map((tech) => (
+                        <span key={tech} className="tech-badge text-xs sm:text-sm">
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                    <div className="flex space-x-4">
+                      <a href={project.link} className="text-blue-600 hover:text-blue-800 font-medium text-sm sm:text-base">
+                        View Project →
+                      </a>
+                    </div>
+                  </div>
+                </div>
               ))}
             </div>
-
-            {filteredProjects.length === 0 && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="text-center py-12"
-              >
-                <p className="text-xl text-white/60">No projects found in this category.</p>
-              </motion.div>
-            )}
           </div>
         </section>
       </div>

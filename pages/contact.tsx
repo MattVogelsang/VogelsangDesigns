@@ -1,7 +1,6 @@
-import { motion } from 'framer-motion'
 import Head from 'next/head'
 import { useState } from 'react'
-import { Mail, Phone, MapPin, Send, Github, Linkedin, Twitter } from 'lucide-react'
+import Image from 'next/image'
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -31,205 +30,138 @@ export default function Contact() {
     })
   }
 
-  const contactInfo = [
-    {
-      icon: Mail,
-      title: "Email",
-      value: "matt@vogelsangdesigns.com",
-      link: "mailto:matt@vogelsangdesigns.com"
-    },
-    {
-      icon: Phone,
-      title: "Phone",
-      value: "+1 (555) 123-4567",
-      link: "tel:+15551234567"
-    },
-    {
-      icon: MapPin,
-      title: "Location",
-      value: "San Francisco, CA",
-      link: "#"
-    }
-  ]
-
-  const socialLinks = [
-    { icon: Github, href: "https://github.com/mattvogelsang", label: "GitHub" },
-    { icon: Linkedin, href: "https://linkedin.com/in/mattvogelsang", label: "LinkedIn" },
-    { icon: Twitter, href: "https://twitter.com/mattvogelsang", label: "Twitter" }
-  ]
-
   return (
     <>
       <Head>
-        <title>Contact - Vogelsangdesigns</title>
+        <title>Contact - Matthew Vogelsang</title>
         <meta name="description" content="Get in touch with Matthew Vogelsang for collaboration opportunities." />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
 
-      <div className="min-h-screen pt-20">
-        <section className="py-20 px-4">
-          <div className="max-w-6xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="text-center mb-16"
-            >
-              <h1 className="text-5xl md:text-7xl font-bold gradient-text mb-6">
-                Get In Touch
-              </h1>
-              <p className="text-xl text-white/80 max-w-2xl mx-auto">
-                Ready to start a project or just want to chat? I'd love to hear from you!
-              </p>
-            </motion.div>
+      <div className="min-h-screen pt-16">
+        <section className="py-12 sm:py-16 md:py-20">
+          <div className="container-custom">
+            <div className="max-w-4xl">
+              {/* Logo */}
+              <div className="mb-6 sm:mb-8 flex justify-center">
+                <div className="relative w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 hover-rotate">
+                  <Image
+                    src="/images/LogoVD.png"
+                    alt="Vogelsang Designs Logo"
+                    fill
+                    className="object-contain"
+                    priority
+                    unoptimized
+                  />
+                </div>
+              </div>
+              
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-8 sm:mb-12 text-center">CONTACT</h1>
+              
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12">
+                {/* Contact Form */}
+                <div className="fade-in-up">
+                  <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">Send a Message</h2>
+                  <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+                    <div>
+                      <label htmlFor="name" className="block text-sm font-medium mb-2">
+                        Name
+                      </label>
+                      <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        required
+                        className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 transition-colors text-sm sm:text-base"
+                        placeholder="Your name"
+                      />
+                    </div>
 
-            <div className="grid lg:grid-cols-2 gap-12">
-              {/* Contact Form */}
-              <motion.div
-                initial={{ opacity: 0, x: -50 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                className="glass-effect rounded-2xl p-8"
-              >
-                <h2 className="text-3xl font-bold mb-6">Send a Message</h2>
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div>
-                    <label htmlFor="name" className="block text-sm font-medium mb-2">
-                      Name
-                    </label>
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      required
-                      className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:border-purple-400 transition-colors"
-                      placeholder="Your name"
-                    />
-                  </div>
+                    <div>
+                      <label htmlFor="email" className="block text-sm font-medium mb-2">
+                        Email
+                      </label>
+                      <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        required
+                        className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 transition-colors text-sm sm:text-base"
+                        placeholder="your.email@example.com"
+                      />
+                    </div>
 
-                  <div>
-                    <label htmlFor="email" className="block text-sm font-medium mb-2">
-                      Email
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      required
-                      className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:border-purple-400 transition-colors"
-                      placeholder="your.email@example.com"
-                    />
-                  </div>
+                    <div>
+                      <label htmlFor="subject" className="block text-sm font-medium mb-2">
+                        Subject
+                      </label>
+                      <input
+                        type="text"
+                        id="subject"
+                        name="subject"
+                        value={formData.subject}
+                        onChange={handleChange}
+                        required
+                        className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 transition-colors text-sm sm:text-base"
+                        placeholder="Project inquiry"
+                      />
+                    </div>
 
-                  <div>
-                    <label htmlFor="subject" className="block text-sm font-medium mb-2">
-                      Subject
-                    </label>
-                    <input
-                      type="text"
-                      id="subject"
-                      name="subject"
-                      value={formData.subject}
-                      onChange={handleChange}
-                      required
-                      className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:border-purple-400 transition-colors"
-                      placeholder="Project inquiry"
-                    />
-                  </div>
+                    <div>
+                      <label htmlFor="message" className="block text-sm font-medium mb-2">
+                        Message
+                      </label>
+                      <textarea
+                        id="message"
+                        name="message"
+                        value={formData.message}
+                        onChange={handleChange}
+                        required
+                        rows={4}
+                        className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 transition-colors resize-none text-sm sm:text-base"
+                        placeholder="Tell me about your project..."
+                      />
+                    </div>
 
-                  <div>
-                    <label htmlFor="message" className="block text-sm font-medium mb-2">
-                      Message
-                    </label>
-                    <textarea
-                      id="message"
-                      name="message"
-                      value={formData.message}
-                      onChange={handleChange}
-                      required
-                      rows={5}
-                      className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:border-purple-400 transition-colors resize-none"
-                      placeholder="Tell me about your project..."
-                    />
-                  </div>
-
-                  <motion.button
-                    type="submit"
-                    disabled={isSubmitting}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-3 px-6 rounded-lg font-semibold hover:from-purple-700 hover:to-pink-700 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
-                  >
-                    {isSubmitting ? (
-                      <>
-                        <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                        <span>Sending...</span>
-                      </>
-                    ) : (
-                      <>
-                        <Send className="w-5 h-5" />
-                        <span>Send Message</span>
-                      </>
-                    )}
-                  </motion.button>
-                </form>
-              </motion.div>
-
-              {/* Contact Info */}
-              <motion.div
-                initial={{ opacity: 0, x: 50 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 0.4 }}
-                className="space-y-8"
-              >
-                <div className="glass-effect rounded-2xl p-8">
-                  <h2 className="text-3xl font-bold mb-6">Contact Information</h2>
-                  <div className="space-y-6">
-                    {contactInfo.map((info, index) => (
-                      <motion.a
-                        key={info.title}
-                        href={info.link}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
-                        className="flex items-center space-x-4 p-4 rounded-lg hover:bg-white/10 transition-colors"
-                      >
-                        <div className="p-3 bg-purple-500/20 rounded-lg">
-                          <info.icon className="w-6 h-6 text-purple-400" />
-                        </div>
-                        <div>
-                          <h3 className="font-semibold">{info.title}</h3>
-                          <p className="text-white/70">{info.value}</p>
-                        </div>
-                      </motion.a>
-                    ))}
-                  </div>
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="btn-primary w-full disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base py-3 sm:py-4"
+                    >
+                      {isSubmitting ? 'Sending...' : 'Send Message'}
+                    </button>
+                  </form>
                 </div>
 
-                <div className="glass-effect rounded-2xl p-8">
-                  <h2 className="text-3xl font-bold mb-6">Follow Me</h2>
-                  <div className="flex space-x-4">
-                    {socialLinks.map((social, index) => (
-                      <motion.a
-                        key={social.label}
-                        href={social.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        initial={{ opacity: 0, scale: 0 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.5, delay: 0.8 + index * 0.1 }}
-                        whileHover={{ scale: 1.1, y: -5 }}
-                        className="p-4 bg-purple-500/20 rounded-lg hover:bg-purple-500/30 transition-colors"
-                      >
-                        <social.icon className="w-6 h-6" />
-                      </motion.a>
-                    ))}
+                {/* Contact Info */}
+                <div className="space-y-6 sm:space-y-8 fade-in-up" style={{ animationDelay: '0.2s' }}>
+                  <div>
+                    <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">Contact Information</h2>
+                    <div className="space-y-3 sm:space-y-4">
+                      <div>
+                        <h3 className="font-semibold text-sm sm:text-base">Email</h3>
+                        <a href="mailto:vogelsangmatt@gmail.com" className="text-blue-600 hover:text-blue-800 text-sm sm:text-base">
+                          vogelsangmatt@gmail.com
+                        </a>
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-sm sm:text-base">Phone</h3>
+                        <a href="tel:+19546688674" className="text-blue-600 hover:text-blue-800 text-sm sm:text-base">
+                          (954) 668-8674
+                        </a>
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-sm sm:text-base">Location</h3>
+                        <p className="text-gray-600 text-sm sm:text-base">Miami, FL</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             </div>
           </div>
         </section>

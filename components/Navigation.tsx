@@ -1,112 +1,178 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { motion } from 'framer-motion'
-import { Menu, X } from 'lucide-react'
+import Image from 'next/image'
 
 export default function Navigation() {
-  const [isOpen, setIsOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false)
+  const [theme, setTheme] = useState('light')
   const router = useRouter()
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50)
+      setIsScrolled(window.scrollY > 10)
     }
+
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const navItems = [
-    { name: 'Home', href: '/' },
-    { name: 'About', href: '/about' },
-    { name: 'Projects', href: '/projects' },
-    { name: 'Contact', href: '/contact' },
-  ]
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme') || 'light'
+    setTheme(savedTheme)
+    document.documentElement.setAttribute('data-theme', savedTheme)
+  }, [])
+
+  const toggleTheme = () => {
+    const newTheme = theme === 'light' ? 'dark' : 'light'
+    setTheme(newTheme)
+    localStorage.setItem('theme', newTheme)
+    document.documentElement.setAttribute('data-theme', newTheme)
+  }
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen)
+  }
+
+  const closeMenu = () => {
+    setIsMenuOpen(false)
+  }
+
+  const isActive = (path: string) => {
+    return router.pathname === path
+  }
 
   return (
-    <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? 'glass-effect' : 'bg-transparent'
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      isScrolled ? 'backdrop-blur-md shadow-lg' : ''
+    }`} style={{ 
+      backgroundColor: 'var(--nav-bg)',
+      borderBottom: '1px solid var(--nav-border)'
+    }}>
+      <div className="container-custom">
+        <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            className="flex-shrink-0"
-          >
-            <Link href="/" className="text-2xl font-bold gradient-text">
-              Vogelsangdesigns
-            </Link>
-          </motion.div>
+          <Link href="/" className="flex items-center space-x-2 hover-lift" onClick={closeMenu}>
+            <div className="relative w-8 h-8">
+              <Image
+                src="/images/LogoVD.png"
+                alt="Vogelsang Designs"
+                fill
+                className="object-contain"
+                unoptimized
+              />
+            </div>
+            <span className="text-lg font-bold text-gradient">Vogelsang Designs</span>
+          </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-4">
-              {navItems.map((item, index) => (
-                <motion.div
-                  key={item.name}
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                >
-                  <Link
-                    href={item.href}
-                    className={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:bg-white/10 hover:scale-105 ${
-                      router.pathname === item.href
-                        ? 'text-purple-400 bg-white/10'
-                        : 'text-white hover:text-purple-400'
-                    }`}
-                  >
-                    {item.name}
-                  </Link>
-                </motion.div>
-              ))}
-            </div>
+          <div className="hidden md:flex items-center space-x-8">
+            <Link 
+              href="/" 
+              className={`nav-link ${isActive('/') ? 'active' : ''}`}
+            >
+              Home
+            </Link>
+            <Link 
+              href="/about" 
+              className={`nav-link ${isActive('/about') ? 'active' : ''}`}
+            >
+              About
+            </Link>
+            <Link 
+              href="/projects" 
+              className={`nav-link ${isActive('/projects') ? 'active' : ''}`}
+            >
+              Work
+            </Link>
+            <Link 
+              href="/contact" 
+              className={`nav-link ${isActive('/contact') ? 'active' : ''}`}
+            >
+              Contact
+            </Link>
+            
+            {/* Theme Toggle */}
+            <button
+              onClick={toggleTheme}
+              className={`theme-toggle ${theme === 'dark' ? 'dark' : ''}`}
+              aria-label="Toggle theme"
+            />
           </div>
 
-          {/* Mobile menu button */}
-          <div className="md:hidden">
+          {/* Mobile Menu Button */}
+          <div className="md:hidden flex items-center space-x-4">
+            {/* Theme Toggle for Mobile */}
             <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="text-white hover:text-purple-400 transition-colors"
+              onClick={toggleTheme}
+              className={`theme-toggle ${theme === 'dark' ? 'dark' : ''}`}
+              aria-label="Toggle theme"
+            />
+            
+            {/* Hamburger Menu Button */}
+            <button
+              onClick={toggleMenu}
+              className="flex flex-col justify-center items-center w-8 h-8 space-y-1"
+              aria-label="Toggle menu"
             >
-              {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              <span className={`block w-6 h-0.5 transition-all duration-300 ${
+                isMenuOpen ? 'rotate-45 translate-y-1.5' : ''
+              }`} style={{ backgroundColor: 'var(--text-primary)' }}></span>
+              <span className={`block w-6 h-0.5 transition-all duration-300 ${
+                isMenuOpen ? 'opacity-0' : ''
+              }`} style={{ backgroundColor: 'var(--text-primary)' }}></span>
+              <span className={`block w-6 h-0.5 transition-all duration-300 ${
+                isMenuOpen ? '-rotate-45 -translate-y-1.5' : ''
+              }`} style={{ backgroundColor: 'var(--text-primary)' }}></span>
             </button>
           </div>
         </div>
-      </div>
 
-      {/* Mobile Navigation */}
-      <motion.div
-        initial={{ opacity: 0, height: 0 }}
-        animate={{ 
-          opacity: isOpen ? 1 : 0,
-          height: isOpen ? 'auto' : 0
-        }}
-        className="md:hidden glass-effect"
-      >
-        <div className="px-2 pt-2 pb-3 space-y-1">
-          {navItems.map((item) => (
-            <Link
-              key={item.name}
-              href={item.href}
-              className={`block px-3 py-2 rounded-md text-base font-medium transition-colors ${
-                router.pathname === item.href
-                  ? 'text-purple-400 bg-white/10'
-                  : 'text-white hover:text-purple-400 hover:bg-white/10'
+        {/* Mobile Menu */}
+        <div className={`md:hidden transition-all duration-300 ease-in-out overflow-hidden ${
+          isMenuOpen ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0'
+        }`}>
+          <div className="py-4 space-y-4 border-t" style={{ borderColor: 'var(--nav-border)' }}>
+            <Link 
+              href="/" 
+              className={`block py-2 px-4 rounded-lg transition-colors duration-200 ${
+                isActive('/') ? 'active' : 'nav-link'
               }`}
-              onClick={() => setIsOpen(false)}
+              onClick={closeMenu}
             >
-              {item.name}
+              Home
             </Link>
-          ))}
+            <Link 
+              href="/about" 
+              className={`block py-2 px-4 rounded-lg transition-colors duration-200 ${
+                isActive('/about') ? 'active' : 'nav-link'
+              }`}
+              onClick={closeMenu}
+            >
+              About
+            </Link>
+            <Link 
+              href="/projects" 
+              className={`block py-2 px-4 rounded-lg transition-colors duration-200 ${
+                isActive('/projects') ? 'active' : 'nav-link'
+              }`}
+              onClick={closeMenu}
+            >
+              Work
+            </Link>
+            <Link 
+              href="/contact" 
+              className={`block py-2 px-4 rounded-lg transition-colors duration-200 ${
+                isActive('/contact') ? 'active' : 'nav-link'
+              }`}
+              onClick={closeMenu}
+            >
+              Contact
+            </Link>
+          </div>
         </div>
-      </motion.div>
-    </motion.nav>
+      </div>
+    </nav>
   )
 }
