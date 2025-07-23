@@ -87,7 +87,7 @@ export default function Projects() {
               {projects.map((project, index) => (
                 <div key={project.id} className="project-card card-hover fade-in-up" style={{ animationDelay: `${index * 0.1}s` }}>
                   <div className="relative h-48 sm:h-56 md:h-64 cursor-pointer group">
-                    <a href={project.link} target="_blank" rel="noopener noreferrer">
+                    <a href={project.link} target="_blank" rel="noopener noreferrer" className="block w-full h-full">
                       <Image
                         src={project.image}
                         alt={project.title}

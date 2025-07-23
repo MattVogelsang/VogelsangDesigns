@@ -240,7 +240,6 @@
   /* Mobile-friendly touch interactions */
   @media (hover: none) and (pointer: coarse) {
     .hover-lift:hover,
-    .card-hover:hover,
     .hover-glow:hover,
     .hover-rotate:hover,
     .hover-bounce:hover,
@@ -252,7 +251,6 @@
     }
 
     .hover-lift:active,
-    .card-hover:active,
     .hover-glow:active,
     .hover-rotate:active,
     .hover-bounce:active,
@@ -260,6 +258,17 @@
     .hover-pulse:active,
     .hover-slide:active {
       transform: scale(0.98);
+    }
+
+    /* Keep card-hover effects for mobile to ensure clickability */
+    .card-hover:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .card-hover:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
   }
 }
@@ -387,6 +396,8 @@
   @apply border rounded-lg overflow-hidden backdrop-blur-sm hover-glow;
   background: var(--card-bg);
   border-color: var(--card-border);
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: rgba(139, 92, 246, 0.2);
 }
 
 .project-card:hover {
@@ -394,6 +405,14 @@
   box-shadow: 
     0 0 5px rgba(139, 92, 246, 0.1),
     0 0 10px rgba(139, 92, 246, 0.05);
+}
+
+.project-card a {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: rgba(139, 92, 246, 0.2);
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 /* Technology badge styles */

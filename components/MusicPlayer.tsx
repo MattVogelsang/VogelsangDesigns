@@ -33,7 +33,7 @@ export default function MusicPlayer() {
       document.removeEventListener('click', handleFirstInteraction)
       document.removeEventListener('touchstart', handleFirstInteraction)
     }
-  }, [isPlaying])
+  }, []) // Remove isPlaying dependency
 
   useEffect(() => {
     if (audioRef.current) {
@@ -42,22 +42,53 @@ export default function MusicPlayer() {
   }, [volume])
 
   const togglePlay = () => {
+    console.log('togglePlay called, isPlaying:', isPlaying)
+    console.log('audioRef.current:', audioRef.current)
+    
     if (audioRef.current) {
-      if (isPlaying) {
-        audioRef.current.pause()
-      } else {
-        audioRef.current.play().catch(console.error)
+      console.log('Audio readyState:', audioRef.current.readyState)
+      console.log('Audio paused:', audioRef.current.paused)
+      console.log('Audio currentSrc:', audioRef.current.currentSrc)
+      
+      try {
+        if (isPlaying) {
+          console.log('Attempting to pause...')
+          audioRef.current.pause()
+          setIsPlaying(false)
+          console.log('Audio paused successfully')
+        } else {
+          console.log('Attempting to play...')
+          // Ensure audio is loaded before playing
+          if (audioRef.current.readyState < 2) {
+            audioRef.current.load()
+          }
+          audioRef.current.play().then(() => {
+            setIsPlaying(true)
+            console.log('Audio started playing successfully')
+          }).catch((error) => {
+            console.error('Error playing audio:', error)
+            setIsPlaying(false)
+          })
+        }
+      } catch (error) {
+        console.error('Error in togglePlay:', error)
       }
-      setIsPlaying(!isPlaying)
+    } else {
+      console.log('audioRef.current is null')
     }
   }
 
   const nextSong = () => {
+    console.log('nextSong called, current index:', currentSongIndex)
     const nextIndex = (currentSongIndex + 1) % playlist.length
+    console.log('next index:', nextIndex, 'song:', playlist[nextIndex])
     setCurrentSongIndex(nextIndex)
     if (audioRef.current) {
+      console.log('Pausing current audio before changing source')
+      audioRef.current.pause()
       audioRef.current.src = playlist[nextIndex]
       if (isPlaying) {
+        console.log('Resuming play after source change')
         audioRef.current.play().catch(console.error)
       }
     }
@@ -86,6 +117,10 @@ export default function MusicPlayer() {
         ref={audioRef}
         src={playlist[currentSongIndex]}
         onEnded={handleEnded}
+        onPause={() => console.log('Audio onPause event fired')}
+        onPlay={() => console.log('Audio onPlay event fired')}
+        onLoadStart={() => console.log('Audio load started')}
+        onCanPlay={() => console.log('Audio can play')}
         loop={playlist.length === 1}
       />
 
